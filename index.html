@@ -5,52 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sortowanie liczb</title>
     <script>
-        function pobierzLiczby() {
-            let tablica = []; // Tablica główna dla liczb
-            let zera = []; // Tablica do zliczania zer
+        // Funkcja uruchamiana po załadowaniu strony
+        window.onload = function() {
+            let tablica = []; // Tablica główna
+            let liczbaZer = 0; // Licznik zer
 
-            while (true) { // Pętla do pobierania liczb
+            while (true) {
                 let liczba = prompt("Podaj liczbę (lub anuluj, aby zakończyć):");
-                
-                // Sprawdzenie, czy użytkownik anulował wpis
-                if (liczba === null) {
-                    break;
-                }
 
-                // Sprawdzenie, czy liczba jest prawidłowa
-                if (isNaN(liczba) || liczba.trim() === "") {
+                if (liczba === null) break; // Przerwanie pętli przy anulowaniu
+                liczba = Number(liczba.trim()); // Konwersja na liczbę i usunięcie zbędnych spacji
+
+                if (isNaN(liczba)) {
                     alert("Podana wartość nie jest liczbą. Spróbuj ponownie.");
                     continue;
                 }
 
-                liczba = Number(liczba); // Konwersja na liczbę
-
                 if (liczba === 0) {
-                    zera.push(liczba); // Dodanie zera do oddzielnej tablicy
+                    liczbaZer++; // Zliczanie zer
                 } else if (liczba % 2 === 0) {
-                    tablica.push(liczba); // Liczby parzyste dodawane na koniec tablicy
+                    tablica.push(liczba); // Parzyste na koniec
                 } else {
-                    tablica.unshift(liczba); // Liczby nieparzyste dodawane na początek tablicy
+                    tablica.unshift(liczba); // Nieparzyste na początek
                 }
 
-                // Pytanie, czy użytkownik chce kontynuować
-                if (!confirm("Czy chcesz dodać kolejną liczbę?")) {
-                    break;
-                }
+                if (!confirm("Czy chcesz dodać kolejną liczbę?")) break; // Pytanie o kontynuację
             }
 
-            // Wyświetlenie wyników
-            document.getElementById("tablica").innerHTML = 
-                tablica.length > 0 ? tablica.join(", ") : "Brak liczb w tablicy.";
-            document.getElementById("zera").innerHTML = 
-                zera.length > 0 ? `Liczba zer: ${zera.length}` : "Brak zer.";
-        }
+            // Wyświetlanie wyników
+            document.getElementById("tablica").textContent = 
+                tablica.length ? tablica.join(", ") : "Brak liczb w tablicy.";
+            document.getElementById("zera").textContent = 
+                liczbaZer ? `Liczba zer: ${liczbaZer}` : "Brak zer.";
+        };
     </script>
 </head>
 <body>
     <h1>Sortowanie liczb</h1>
-    <button onclick="pobierzLiczby()">Rozpocznij</button>
-
     <div>
         <h2>Tablica:</h2>
         <p id="tablica">Brak danych.</p>
