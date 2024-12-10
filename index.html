@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortowanie liczb</title>
+    <script>
+        function pobierzLiczby() {
+            let tablica = []; // Tablica główna dla liczb
+            let zera = []; // Tablica do zliczania zer
+
+            while (true) { // Pętla do pobierania liczb
+                let liczba = prompt("Podaj liczbę (lub anuluj, aby zakończyć):");
+                
+                // Sprawdzenie, czy użytkownik anulował wpis
+                if (liczba === null) {
+                    break;
+                }
+
+                // Sprawdzenie, czy liczba jest prawidłowa
+                if (isNaN(liczba) || liczba.trim() === "") {
+                    alert("Podana wartość nie jest liczbą. Spróbuj ponownie.");
+                    continue;
+                }
+
+                liczba = Number(liczba); // Konwersja na liczbę
+
+                if (liczba === 0) {
+                    zera.push(liczba); // Dodanie zera do oddzielnej tablicy
+                } else if (liczba % 2 === 0) {
+                    tablica.push(liczba); // Liczby parzyste dodawane na koniec tablicy
+                } else {
+                    tablica.unshift(liczba); // Liczby nieparzyste dodawane na początek tablicy
+                }
+
+                // Pytanie, czy użytkownik chce kontynuować
+                if (!confirm("Czy chcesz dodać kolejną liczbę?")) {
+                    break;
+                }
+            }
+
+            // Wyświetlenie wyników
+            document.getElementById("tablica").innerHTML = 
+                tablica.length > 0 ? tablica.join(", ") : "Brak liczb w tablicy.";
+            document.getElementById("zera").innerHTML = 
+                zera.length > 0 ? `Liczba zer: ${zera.length}` : "Brak zer.";
+        }
+    </script>
+</head>
+<body>
+    <h1>Sortowanie liczb</h1>
+    <button onclick="pobierzLiczby()">Rozpocznij</button>
+
+    <div>
+        <h2>Tablica:</h2>
+        <p id="tablica">Brak danych.</p>
+    </div>
+    <div>
+        <h2>Zera:</h2>
+        <p id="zera">Brak danych.</p>
+    </div>
+</body>
+</html>
